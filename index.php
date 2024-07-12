@@ -59,8 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (empty($errors)) {
         $destinationTime = (new DateTime())->setDate($destination['YEAR'],$destination['MONTH'],$destination['DAY']);
-        if($destination['daytime']=='PM')
-            $destinationTime->add(new DateInterval('PT12H'));
+        $hour =$destination['daytime']=='PM'? $destination['HOUR']+12:$destination['HOUR'];
+        $interval = (new DateTime())->setTime($hour,$destination['MIN'])->diff((new DateTime())->setTime($present['HOUR'],$present['MIN']));
+        $destinationTime->add($interval);
         //$destinationTime->setTime($destination['HOUR'],$destination['MIN']);
         $_SESSION['destination'] = $destinationTime;
         header('Location: /index.php');
