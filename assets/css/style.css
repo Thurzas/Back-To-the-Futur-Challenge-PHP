@@ -15,8 +15,11 @@ body
 
 .component
 {
-    width:fit-content;
+    display: flexbox;
+    min-width: fit-content;
+    max-width:60vw;
     background-color: #575b57;
+    align-items: center;
 }
 
 .component h2

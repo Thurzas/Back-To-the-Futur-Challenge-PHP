@@ -12,7 +12,7 @@ if(isset($_SESSION['destination'])){
         'MONTH'=>$targetArray[1],
         'DAY'=>$targetArray[2],
         'YEAR'=>$targetArray[0],
-        'A'=>$targetArray[5],
+        'daytime'=>$targetArray[5],
         'HOUR'=>$targetArray[3],
         'MIN'=>$targetArray[4]
     ];
@@ -23,7 +23,7 @@ $present = [
     'MONTH'=>$presentTimeArray[1],
     'DAY'=>$presentTimeArray[2],
     'YEAR'=>$presentTimeArray[0],
-    'A'=>$presentTimeArray[5],
+    'daytime'=>$presentTimeArray[5],
     'HOUR'=>$presentTimeArray[3],
     'MIN'=>$presentTimeArray[4]
 ];
@@ -103,11 +103,11 @@ function estimateFuel(DateInterval $time):int
             <?php if($info == 'AM' || $info == 'PM') :?>
                 <div class="wrapper radio-buttons">
                     <label for="AM"><p class="label">AM</p>
-                        <input type="radio" id="AM" name="daytime" value="AM" <?= $present['A']=='AM' ? '': 'checked="checked"' ?> />
+                        <input type="radio" id="AM" name="daytime" value="AM" <?= $present['daytime']=='AM' ? '': 'checked="checked"' ?> />
                         <span class="checkmark"></span>
                     </label>
                     <label for="PM"><p class="label">PM</p>
-                        <input type="radio" id="PM" name="daytime" value="PM" <?= $present['A']=='PM' ? '': 'checked="checked"' ?> />
+                        <input type="radio" id="PM" name="daytime" value="PM" <?= $present['daytime']=='PM' ? '': 'checked="checked"' ?> />
                         <span class="checkmark"></span>
                     </label>
                 </div>
@@ -137,14 +137,19 @@ function estimateFuel(DateInterval $time):int
             <?php if($info == 'AM' || $info == 'PM') :?>
                 <div class="wrapper">
                     <p class="label">AM</p>
-                    <p class="<?= $present['A']=='AM' ? 'lit':'unlit' ?>"></p>
+                    <p class="<?= $present['daytime']=='AM' ? 'lit':'unlit' ?>"></p>
                     <p class="label">PM</p>
-                    <p class="<?= $present['A']=='PM' ? 'lit':'unlit' ?>"></p>
+                    <p class="<?= $present['daytime']=='PM' ? 'lit':'unlit' ?>"></p>
                 </div>
             <?php else :?>
             <div class="wrapper">
-                <p class="label"><?= $key ?> :</p>
-                <p class="display"><?=  $info ?></p>
+                <?php if($key == 'MIN') :?>
+                    <p class="label"><?= $key ?> :</p>
+                    <p class="display form-min"><?=  $info ?></p>
+                <?php else :?>    
+                    <p class="label"><?= $key ?> :</p>
+                    <p class="display"><?=  $info ?></p>
+                <?php endif; ?>
             </div>  
             <?php endif;?>
         <?php endforeach; ?>  
@@ -157,9 +162,9 @@ function estimateFuel(DateInterval $time):int
                 <?php if($info == 'AM' || $info == 'PM') :?>
                     <div class="wrapper">
                         <p class="label">AM</p>
-                        <p class="<?= $target['A']=='AM' ? 'lit':'unlit' ?>"></p>
+                        <p class="<?= $target['daytime']=='AM' ? 'lit':'unlit' ?>"></p>
                         <p class="label">PM</p>
-                        <p class="<?= $target['A']=='PM' ? 'lit':'unlit' ?>"></p>
+                        <p class="<?= $target['daytime']=='PM' ? 'lit':'unlit' ?>"></p>
                     </div>
                 <?php else :?>
                 <div class="wrapper">
